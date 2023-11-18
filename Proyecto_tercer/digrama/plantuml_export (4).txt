@@ -1,0 +1,74 @@
+@startuml
+title Diagrama de clases
+class Inmueble {
+  + id: Long
+  + referencia: String
+  + tipo: String
+  + direccion: String
+  + precio: Double
+  + disponible: Boolean
+
+  + agregarCaracteristicas(caracteristicas: Caracteristica): void
+  + agregarOferta(oferta: Oferta): void
+}
+
+class Oficina {
+  + id: Long
+  + ubicacion: String
+  + nombre: String
+  + descripcion: String
+}
+
+class Cliente {
+  + id: Long
+  + identificacion: String
+  + nombre: String
+  + visitas: List<Visita>
+  + inmueblesFavoritos: List<Inmueble>
+  
+  + agregarVisita(visita: Visita): void
+  + agregarOferta(oferta: Oferta): void
+}
+
+class Visita {
+  + id: Long
+  + fecha: Date
+  + cliente: Cliente
+  + inmueble: Inmueble
+
+  + agregarVisita(): void
+  + rechazarVisita(): void
+}
+
+class Oferta {
+  + id: Long
+  + descripcion: String
+  + precioOferta: Double
+  + inmueble: Inmueble
+
+  + aceptarOferta(): void
+  + rechazarOferta(): void
+}
+
+class Caracteristica {
+  + id: Long
+  + nombre: String
+  + descripcion: String
+  + inmueble: Inmueble
+}
+
+class Propietario {
+  + id: Long
+  + nombre: String
+  + identificacion: String
+  + inmueblesPropios: List<Inmueble>
+}
+
+Cliente --|> Inmueble: inmueblesFavoritos
+Cliente "1" -- "many" Visita : visitas
+Visita "1" -- "1" Inmueble : inmueble
+Oficina "1" -- "many" Inmueble : ubicacion
+Oferta "1" -- "1" Inmueble : inmueble
+Caracteristica "1" -- "1" Inmueble : inmueble
+Propietario "1" -- "many" Inmueble : inmueblesPropios
+@enduml
